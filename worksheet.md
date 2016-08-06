@@ -37,7 +37,7 @@ Draw a 20 by 20 grid on a 1280x720 window, have the grid take up the 720x720 squ
   * [The Graphics2D class](https://docs.oracle.com/javase/8/docs/api/java/awt/Graphics2D.html)
   * [Getting the frame size just right](http://stackoverflow.com/questions/5916226/java-swing-set-actual-frame-size-inside)
 
-# Task 4
+# ☆ Task 4
 
 Create a 2D array to represent the grid and connect the drawn grid to the array in some way.
 
