@@ -48,3 +48,31 @@ Modify your program so that mousing over a cell will "highlight" it.  Highlighte
 # Task 6
 
 Ensure your program, if it does not already, has a `Cell` class and that your grid array is an array of `Cell` objects.  It should still display as before.  What are reasonable methods and fields for the `Cell` class?  Now create a `Grid` class to subsume your 2D array of `Cell`s.  What fields and methods should this class have?
+
+# ☆ Task 7
+
+Define a `Stage` object that can contain one `Grid` object and many `Characters` objects.  There must be three separate characters, each a subclass of a `Character` interface and each must have its own `paint` method.  A `paint` method must take a mouse position parameter plus a `Graphics2D` parameter and draw the character on that graphic. 
+
+~~~~
+public void paint(java.awt.Graphics2D g2, java.awt.Point mouseLoc);
+~~~~
+
+The return type of `paint` is `void`.  To work out where a character is drawn, it must have, as a field (`location`) that is set in its constructor, a `Cell` object.
+
+Have the program start with 1 grid and 3 characters:
+
+  * Sheep (drawn white)
+  * Wolf (drawn red)
+  * Shepherd (drawn green)
+
+# Task 8
+
+Have a close look at your `Shepherd`, `Sheep` and `Wolf` classes.  If they are anything like mine they are _all the same except for the colour they use_.  This repetition is "a bad thing" because if the same thing is done in three different places, we need to remember that updating one requires us to update all three.
+
+Is there a place that you could put all the common parts?
+
+🤔 Will this work given what you currently have?  If not, what would we need to change?
+
+# Task 9
+
+Draw a picture of the inheritance heirarchy you have created.  You should (losely) use [UML notation](http://www.csci.csusb.edu/dick/cs201/uml.html) for your diagram.  You are using UML In this case, and all through this course, only for "a rough sketch of an idea".
