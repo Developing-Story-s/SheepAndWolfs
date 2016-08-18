@@ -76,3 +76,13 @@ Is there a place that you could put all the common parts?
 # Task 9
 
 Draw a picture of the inheritance heirarchy you have created.  You should (losely) use [UML notation](http://www.csci.csusb.edu/dick/cs201/uml.html) for your diagram.  You are using UML In this case, and all through this course, only for "a rough sketch of an idea".
+
+# Task 10
+
+Assume we are working for a man who hates arrays (lets not go into why).  He has demanded that the 2D array you have (probably) in your `Grid` class be converted to a "proper" object.  You look around and find Java has no good alternative to arrays for 2D structures.  There are lots of people online telling you to use something like `List<List<int>>` but you have tried nested lists before and have still not fully recovered.  Looking around for some other alternative, the best suggestion you can find is to use a `List` and to ["flatten" the 2D array](http://stackoverflow.com/a/10785908).  
+
+You don't want to have to do the flattening arithmetic all through your code so you resolve to create your own `Array2D` class.  It will have a constructor that sets the width and height of the array, a method to put new elements in at a particular index (`addAt(int i, int j, E element)`) and an method to get elements out (`getFrom(int i, int y`).
+
+Finally, you will make this `Array2D` class _generic_ so it can hold objects of any type, just like normal arrays.
+
+Create such a class and use it in your `Grid` class in place of the 2D array that you had in there before.
