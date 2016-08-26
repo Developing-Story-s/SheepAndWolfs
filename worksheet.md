@@ -86,3 +86,24 @@ You don't want to have to do the flattening arithmetic all through your code so 
 Finally, you will make this `Array2D` class _generic_ so it can hold objects of any type, just like normal arrays.
 
 Create such a class and use it in your `Grid` class in place of the 2D array that you had in there before.
+
+# Task 11
+
+You should start this task from the solution to last week's work (which we will call "checkpoint").  We have included this in the master branch this week so everyone can start from the same solution.  You will find solution code in the folder `checkpoint_one`.  It's not an eclipse project, its just the `.java` files.  It is up to you to import it into eclipse and get it running.
+
+Notice the following things about the checkpoint:
+
+  * The `Main.java` file has a `Main` class the extends `Canvas`.  This class drives the whole display loop via an infinite loop in `gameLoop`.
+  * This game loop will loop as fast as it possibly can.  It heat up your laptop by working the CPU super hard to no end at all.
+  * All the actual drawing and game logic is done by the `Stage` class but we pass from `Main` the mouse location so `Stage` has all the information it needs to do its job.
+  * `Stage` passes that information on to other objects when they need it.
+
+Your task is to "fix" the framerate so we are not pointlessly burning CPU power.  You can do this by asking the current thread to sleep for a period of time using [`Thread.sleep`](https://docs.oracle.com/javase/tutorial/essential/concurrency/sleep.html).  We want the framerate to be about 50 frames per second, that means we need the loop to take 20ms to complete. Notice that checkpoint will already calculate how long the painting took.  Your job is to work out how much time on top of that is needed to get to 20ms and then to have the thread sleep that long.
+
+Sleeping a thread throws an `InterruptedException` so you will need to catch that.  In fact, we don't care about the thread being interrupted so the catch block should just report the fact it was interrupted
+
+~~~~~
+System.out.println("thread was interrupted, but really, who cares?");
+~~~~~
+
+and continue on as normal.
