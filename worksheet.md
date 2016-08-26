@@ -107,3 +107,93 @@ System.out.println("thread was interrupted, but really, who cares?");
 ~~~~~
 
 and continue on as normal.
+
+# Task 12
+
+In this task we will introduce "moves" into the game.  At this point they are all automatic.  You are going to make it so the sheep moves towards the shepherd on each move and the shepherd moves towards the wolf on each move.  I will walk you through the sheep movement, assuming you are starting from `checkpoint_one` with the frame rate fixed as in task 9.
+
+Firstly we need to fix the "move rate" separately to the frame rate.  We want the sheep to move once every two seconds, which is once every 100 frames.  To achieve this we will need a step counter in the game loop
+
+~~~~~
+  public void gameLoop(){
+    int counter = 0; // counter to tell us how many frames since last move
+    while(true){
+      // these two lines give me a visualisation of frame rate.  On my machine it is pretty good but not locked on 20ms
+      int thisLoopMillis = java.lang.Math.min(100,(int)(System.currentTimeMillis() - lastStartTime));
+      System.out.println("                                                                                                             ".substring(thisLoopMillis) + ".");
+      lastStartTime = System.currentTimeMillis();
+      counter = (counter + 1) % 100;  // add one to counter and set back to zero if it went over 100 (how I love modulo arithmetic)
+      if (counter == 0)
+        stage.step();  // make a move if the counter just got reset (i.e. went over 100).
+      this.repaint();
+~~~~~
+
+Notice I have left out the bottom of the `gameLoop` function.  You probably have your `sleep` call in there to fix the framerate.  If you have not been able to fix the framerate, this code will still work but moves will happen very fast.
+
+You will see we are calling a new `step` method on the `Stage` object, so we better implement it.  This method will ask all the characters on the stage to `act`.
+
+~~~~~
+    public void step(){
+        sheep   .act(this);
+        wolf    .act(this);
+        shepherd.act(this);
+    }
+~~~~~
+
+Notice that we are passing a `Stage` object to each character to act upon.  This is so they can find where the other characters in the game are and move appropriately.  How can a sheep move towards the shepherd unless it has access to a shepherd object to find out where it is?  What alternate design choices can you think of here?  I.e. what other ways might you get a sheep to have access to the shepherd it wants to move towards?
+
+It looks like all characters have this `act` method, so we better implement it in the `Character` class.  The checkpoint has each character declared as their specific type so we could have three separate `act` methods in the three different classes (i.e. we could make that work) but from a design point of view that makes no sense.  The three characters are doing three versions of the same thing and we already have a super-class to put that method in.  By default, characters will do nothing (be passive) when we ask them to act.
+
+~~~~~
+  // The argument is the stage on which to act.  Every actor needs a stage
+  public void act(Stage stage){
+  }
+~~~~~
+
+Lets override the `act` method in the `Sheep` class to do something interesting
+
+~~~~~
+    public void act(Stage stage){
+      Cell shepherdLoc = stage.whereIsNearestShepherdTo(this.location).location;
+      Cell newLoc = this.location.oneCloserTo(shepherdLoc);
+      this.location = newLoc;
+    }
+~~~~~
+
+Again we have used dome methods that don't exist yet:
+
+  * `whereIsNearestShepherdTo` that asks the stage to tell the sheep which shepherd is closest to its current location (there is only one for now but in future there might be more)
+  * `oneCloserTo` that asks a cell to work out which of its neighbouring cells is closer to a third cell.
+
+Here are implementations of those two methods, make sure you put them in the right class definitions.  For good measure lets add a `whereIsNearestWolfTo` method as well for later use.
+
+~~~~~
+    public Character whereIsNearestShepherdTo(Cell loc){return shepherd;}
+    public Character whereIsNearestWolfTo(Cell loc){return wolf;}
+~~~~~
+
+~~~~~
+  public Cell oneCloserTo(Cell other){
+    int xdiff = other.x - this.x;
+    int ydiff = other.y - this.y;
+    return new Cell(this.x + Integer.signum(xdiff), this.y + Integer.signum(ydiff));
+  }
+~~~~~
+
+Its a simple matter to implement the shepherds movement now.
+
+~~~~~
+    public void act(Stage stage){
+      Cell wolfLoc = stage.whereIsNearestWolfTo(this.location).location;
+      Cell newLoc = this.location.oneCloserTo(wolfLoc);
+      this.location = newLoc;
+    }
+~~~~~
+
+Imagine your game designer comes to you now and says
+
+"I've just had a brilliant idea!  We are going to put cursed squares on the map and if a sheep goes over that square it goes mental.  Instead of running towards the shepherd it will start running towards the wolf!"
+
+So you no longer want the sheep to have fixed behaviour, you want it to have variable behaviour at run time.  No longer can you have the `act` method defined in the sheep class directly.  Well, you could put a conditional in there but you just know your designer will come back later with more crazy sheep behaviours and you already overheard the design staff talking about "what if the shepherd started acting like sheep?" so you know the animal behaviour is going to have to be _abstracted out_ somehow.
+
+Use a strategy pattern to encapsulate character behaviour and to allow them to be swapped at run time.
