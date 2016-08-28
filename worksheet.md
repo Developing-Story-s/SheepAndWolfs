@@ -87,7 +87,7 @@ Finally, you will make this `Array2D` class _generic_ so it can hold objects of 
 
 Create such a class and use it in your `Grid` class in place of the 2D array that you had in there before.
 
-# Task 11
+# ☆ Task 11
 
 You should start this task from the solution to last week's work (which we will call "checkpoint").  We have included this in the master branch this week so everyone can start from the same solution.  You will find solution code in the folder `checkpoint_one`.  It's not an eclipse project, its just the `.java` files.  It is up to you to import it into eclipse and get it running.
 
