@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Main extends Canvas {
+public class Main extends javax.swing.JPanel {
 
 	static Stage stage;
 	

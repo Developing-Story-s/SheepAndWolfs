@@ -6,9 +6,10 @@ class Array2D<E>{
 		this.width = width;
 		this.height = height;
 		underlying = new java.util.ArrayList<E>(width * height);
+    for(int i = 0; i  < width*height; i++){ underlying.add(i,null); }
 	}
 	public void addAt(int i, int j, E elt){
-	  underlying.add(i*width + j,elt);
+	  underlying.set(i*width + j,elt);
 	}
 
 	public E getFrom(int i, int j){
