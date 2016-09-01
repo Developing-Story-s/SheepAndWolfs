@@ -155,7 +155,7 @@ Lets override the `act` method in the `Sheep` class to do something interesting
 ~~~~~
     public void act(Stage stage){
       Cell shepherdLoc = stage.whereIsNearestShepherdTo(this.location).location;
-      Cell newLoc = this.location.oneCloserTo(shepherdLoc);
+      Cell newLoc = stage.oneCellCloserTo(location, shepherdLoc);
       this.location = newLoc;
     }
 ~~~~~
@@ -163,7 +163,7 @@ Lets override the `act` method in the `Sheep` class to do something interesting
 Again we have used dome methods that don't exist yet:
 
   * `whereIsNearestShepherdTo` that asks the stage to tell the sheep which shepherd is closest to its current location (there is only one for now but in future there might be more)
-  * `oneCloserTo` that asks a cell to work out which of its neighbouring cells is closer to a third cell.
+  * `oneCellCloserTo` that asks a stage to work out which of cell is closer to a third cell.
 
 Here are implementations of those two methods, make sure you put them in the right class definitions.  For good measure lets add a `whereIsNearestWolfTo` method as well for later use.
 
@@ -172,12 +172,14 @@ Here are implementations of those two methods, make sure you put them in the rig
     public Character whereIsNearestWolfTo(Cell loc){return wolf;}
 ~~~~~
 
+Also added to `Stage` is
+
 ~~~~~
-  public Cell oneCloserTo(Cell other){
-    int xdiff = other.x - this.x;
-    int ydiff = other.y - this.y;
-    return new Cell(this.x + Integer.signum(xdiff), this.y + Integer.signum(ydiff));
-  }
+public Cell oneCellCloserTo(Cell from, Cell to){
+      int xdiff = to.x - from.x;
+      int ydiff = to.y - from.y;
+      return grid.cellAt(from.x + Integer.signum(xdiff), from.y + Integer.signum(ydiff));
+    }
 ~~~~~
 
 Its a simple matter to implement the shepherds movement now.
@@ -185,7 +187,7 @@ Its a simple matter to implement the shepherds movement now.
 ~~~~~
     public void act(Stage stage){
       Cell wolfLoc = stage.whereIsNearestWolfTo(this.location).location;
-      Cell newLoc = this.location.oneCloserTo(wolfLoc);
+      Cell newLoc = stage.oneCellCloserTo(location, wolfLoc);
       this.location = newLoc;
     }
 ~~~~~
