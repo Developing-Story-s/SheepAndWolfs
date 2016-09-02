@@ -277,7 +277,7 @@ Even this solution is not good enough - the mouse location handling code throws 
 
 We need to do this properly, we need to use the built-in (awt/swing) mouse handling!
 
-# Task 14
+# ☆ Task 14
 
 Take a close look at the changes that have been made.  Is there an instane of the observer pattern in there?
 
