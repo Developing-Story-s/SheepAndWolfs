@@ -199,3 +199,88 @@ Imagine your game designer comes to you now and says
 So you no longer want the sheep to have fixed behaviour, you want it to have variable behaviour at run time.  No longer can you have the `act` method defined in the sheep class directly.  Well, you could put a conditional in there but you just know your designer will come back later with more crazy sheep behaviours and you already overheard the design staff talking about "what if the shepherd started acting like sheep?" so you know the animal behaviour is going to have to be _abstracted out_ somehow.
 
 Use a strategy pattern to encapsulate character behaviour and to allow them to be swapped at run time.
+
+# Task 13
+
+Time to sort out our mouse handling, at the moment it is simplistic and won't grow with our requirements.
+
+We are going to move to an "event" model of mouse interaction.  Instead of individual cells and characters checking the mouse location whenever they need to, we will instead have those objects notified when the mouse has entered or left their location.
+
+This allows us to take the mouse detection out of the  `Cell` class and to replace that with `mouseEntered` and `mouseLeft` methods.
+
+~~~~~
+import java.awt.*;
+
+class Cell{
+  int x;
+  int y;
+  Color drawColour;
+
+  public Cell(int x, int y){
+    this.x = x;
+    this.y = y;
+    drawColour = Color.GRAY;
+  }
+
+  public void mouseLeft(){
+    drawColour = Color.GRAY;
+  }
+
+  public void mouseEntered(){
+    drawColour = Color.DARK_GRAY;
+  }
+
+
+  public void draw(Graphics g, Point mouseLoc){
+    g.setColor(drawColour);
+    g.fillRect(x*35+10,y*35+10,35,35);
+  }
+
+...
+}
+~~~~~
+
+Notice how much simpler the `draw` method is and notice also that we now have to have the "current draw colour" as a field (so-called state) of the `Cell` class.
+
+We now have to choose who will be calling these `mouseEntered` and `mouseLeft` methods.  The candidates are the stage and the grid, we choose the stage.  It will need new fields to keep track of mouse location
+
+~~~~~
+    Point lastMouseLoc = new Point(0,0);
+    Cell mouseWasIn = null;
+~~~~~
+
+and in the `draw` method we will do all the computation to:
+
+  * check the new mouse position,
+  * check if the mouse has moved into a new cell
+
+~~~~~
+    public void draw(Graphics g, Point mouseLoc){
+      // check to see if the mouse has entered or left any cells
+      if (lastMouseLoc != null && !lastMouseLoc.equals(mouseLoc)){
+        int mouseCellX = ((int)mouseLoc.getX() - 10) / 35;
+        int mouseCellY = ((int)mouseLoc.getY() - 10) / 35;
+        if (!grid.getCell(mouseCellX, mouseCellY).equals(mouseWasIn)){
+          if (mouseWasIn != null) {mouseWasIn.mouseLeft();}
+          mouseWasIn = grid.getCell(mouseCellX, mouseCellY);
+          mouseWasIn.mouseEntered();
+        }
+      }
+      grid    .draw(g, mouseLoc);
+      sheep   .draw(g, mouseLoc);
+      wolf    .draw(g, mouseLoc);
+      shepherd.draw(g, mouseLoc);
+    }
+~~~~~
+
+Even this solution is not good enough - the mouse location handling code throws an exception if the mouse is outside the screen for one thing....
+
+We need to do this properly, we need to use the built-in (awt/swing) mouse handling!
+
+# Task 14
+
+Take a close look at the changes that have been made.  Is there an instane of the observer pattern in there?
+
+If so, draw up the observer class diagram showing where all your classes fit into this diagram.
+
+If not, why not?  What is missing?  Sketch how you would introduce the observer pattern to the system as it currently is.
