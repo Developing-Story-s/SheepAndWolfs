@@ -3,6 +3,7 @@
 bin/
 tmp/
 *.tmp
+.DS_Store
 *.bak
 *.swp
 *~.nib

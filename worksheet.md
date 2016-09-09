@@ -284,3 +284,15 @@ Take a close look at the changes that have been made.  Is there an instane of th
 If so, draw up the observer class diagram showing where all your classes fit into this diagram.
 
 If not, why not?  What is missing?  Sketch how you would introduce the observer pattern to the system as it currently is.
+
+# ☆ Task 15
+
+Starting from `checkpoint_two` implement two a new character decorator for when the sheep is "on" the shepherd.  As you play the game you should notice that its easy to get the shepherd and sheep on the same spot and the sheep dissapears.  In this case, decorate the shepherd to show it is "carrying" the sheep.  You will need to:
+
+  * Make a new concrete decorator
+  * Override the draw method in a creative way to show the presence of the sheep
+  * Update the program so that if the sheep goes onto the shepherd, the shepherd is appropriately decorated.
+
+# ☆ Task 16
+
+Find at least one loop in `checkpoint_two` that could be replaced with an instance of the Iterator pattern and replace it.
