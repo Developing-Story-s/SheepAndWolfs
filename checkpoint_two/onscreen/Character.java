@@ -51,7 +51,10 @@ public abstract class Character implements MouseObserver {
 
   public Rectangle getBounds(){return location.getBounds();}
 
-  
+  public Stage getStage() { return stage; }
+
+
+
 }
 
 

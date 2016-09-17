@@ -15,6 +15,7 @@ public abstract class CharacterDecorator extends Character {
   public Rectangle getBounds(){return character.getBounds();}
   public Cell      getLocation(){return character.getLocation();}
   public void      setLocation(Cell loc){character.setLocation(loc);}
+  public Stage     getStage(){return character.getStage();}
    
 
   public abstract void draw(Graphics g);

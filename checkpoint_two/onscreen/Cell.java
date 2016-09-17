@@ -39,7 +39,7 @@ public class Cell implements MouseObserver {
   }
 
   public Point getTopLeft(){
-    return new java.awt.Point(x*35+10, y*35+10);
+    return new Point(x*35+10, y*35+10);
   }
 
   public int distanceTo(Cell other){

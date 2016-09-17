@@ -9,13 +9,13 @@ public class HighlightedCharacter extends CharacterDecorator{
 
   public HighlightedCharacter(Character c){
     super(c);
-    biggerBounds = new Rectangle(character.location.getTopLeft().x - 35, character.location.getTopLeft().y - 35, 105, 105);
+    biggerBounds = new Rectangle(character.getLocation().getTopLeft().x - 35, character.getLocation().getTopLeft().y - 35, 105, 105);
   }
 
   public void draw(Graphics g){
     character.draw(g);
     g.setColor(Color.WHITE);
-    g.drawRect(character.location.getTopLeft().x + 5, character.location.getTopLeft().y + 5, 25, 25);
+    g.drawRect(character.getLocation().getTopLeft().x + 5, character.getLocation().getTopLeft().y + 5, 25, 25);
 
     g.drawRect(biggerBounds.x, biggerBounds.y, biggerBounds.width, biggerBounds.height);
   }
@@ -23,8 +23,8 @@ public class HighlightedCharacter extends CharacterDecorator{
   public Rectangle getBounds(){return biggerBounds;}
 
   public void mouseClicked(MouseEvent e){
-    this.setLocation(character.stage.grid.cellAt(e.getPoint()));
-    character.stage.shepherd = character;
-    character.stage.readyToStep = true;
+    this.setLocation(character.getStage().grid.cellAt(e.getPoint()));
+    character.getStage().shepherd = character;
+    character.getStage().readyToStep = true;
   }
 }
