@@ -21,7 +21,9 @@ public class RabbitBehaviour implements Behaviour{
 			break;
 		case 3:
 			location = Stage.getInstance().getAdjacent(location, 3);
+			System.out.println();
 			break;
+
 		default:
 			location = Stage.getInstance().getAdjacent(location, 8);
 			break;
