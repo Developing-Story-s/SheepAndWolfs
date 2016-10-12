@@ -1,0 +1,20 @@
+
+.metadata
+bin/
+tmp/
+*.tmp
+.DS_Store
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+*.class
+
+# Eclipse Core
+.project
+
+# External tool builders
+.externalToolBuilders/
