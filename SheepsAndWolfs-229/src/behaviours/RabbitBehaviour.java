@@ -10,20 +10,15 @@ public class RabbitBehaviour implements Behaviour{
 	public Cell execute(Cell location){
 		location = Stage.getInstance().getAdjacent(location, rab.nextMove());
 		switch (rab.nextMove()){
-		case 0:
-			location = Stage.getInstance().getAdjacent(location, 0);
+		case 0:		location = Stage.getInstance().getAdjacent(location, 0);
 			break;
-		case 1:
-			location = Stage.getInstance().getAdjacent(location, 1);
+		case 1:		location = Stage.getInstance().getAdjacent(location, 1);
 			break;
-		case 2:
-			location = Stage.getInstance().getAdjacent(location, 2);
+		case 2:		location = Stage.getInstance().getAdjacent(location, 2);
 			break;
-		case 3:
-			location = Stage.getInstance().getAdjacent(location, 3);
+		case 3:		location = Stage.getInstance().getAdjacent(location, 3);
 			break;
-		default:
-			location = Stage.getInstance().getAdjacent(location, 8);
+		default:	location = Stage.getInstance().getAdjacent(location, 8);
 			break;
 		}//end switch()
 		return location;

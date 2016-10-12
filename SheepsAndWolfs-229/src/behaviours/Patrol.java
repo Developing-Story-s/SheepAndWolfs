@@ -15,7 +15,8 @@ public class Patrol implements Behaviour{
 		int x = location.x;
  		if(x < 1)	m = 1;
 		else if(x > 18)	m = -1;
-		return new Cell(location.x + m, location.y);
+ 		location.x = location.x + m;
+		return location;
 	}
 	
 	
